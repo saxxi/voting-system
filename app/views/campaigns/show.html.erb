@@ -1,0 +1,25 @@
+<%= link_to "Campaigns", :root, class: 'breadcrumb' %>
+<h3>Campaign ”<%= @campaign.code %>”</h3>
+
+<div class="card-container">
+  Candidates
+
+  <ul>
+    <% @candidate_votes.each do |candidate_vote| %>
+      <li>
+        <div class="">
+          candidate
+
+          <div class="">
+            score: <%= candidate_vote.candidate_votes %>
+          </div>
+          <div class="">
+            gross: <%= candidate_vote.gross_votes %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= link_to "back", :root %>
+</div>

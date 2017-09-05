@@ -1,0 +1,11 @@
+<h3>Campaigns voting results</h3>
+
+<div class="campaigns">
+
+  <ul>
+    <% @campaigns.each do |campaign| %>
+      <li><%= link_to campaign.code, campaign %></li>
+    <% end %>
+  </ul>
+
+</div>
