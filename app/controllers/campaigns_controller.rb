@@ -8,6 +8,7 @@ class CampaignsController < ApplicationController
 
   def show
     @candidate_votes = []
+    @candidate_votes = Candidate.votes_for_campaign @campaign.id
   end
 
   private

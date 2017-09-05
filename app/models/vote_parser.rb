@@ -28,13 +28,14 @@ class VoteParser
   end
 
   def parsed_voted_at
-    return nil unless @string[1].present?
+    return nil unless @string[1].present? && @string[1] =~ /[0-9]{10}/
     DateTime.strptime(@string[1],'%s')
   end
 
   def parsed_campaign_id
     code = extract_value 2, 'Campaign'
-    Campaign.find_by(code: code).try(:first).try(:id)
+    KeyValStore.get(:campaigns, code) ||
+      Campaign.find_by(code: code).try(:first).try(:id)
   end
 
   def parsed_validity
@@ -45,7 +46,8 @@ class VoteParser
 
   def parsed_candidate_id
     code = extract_value 4, 'Choice'
-    Candidate.find_by(code: code).try(:first).try(:id)
+    KeyValStore.get(:candidates, code) ||
+      Candidate.find_by(code: code).try(:first).try(:id)
   end
 
   def extract_value(index, expected_key)

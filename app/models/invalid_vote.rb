@@ -1,0 +1,2 @@
+class InvalidVote < ApplicationRecord
+end

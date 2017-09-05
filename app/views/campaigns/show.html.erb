@@ -5,18 +5,17 @@
   Candidates
 
   <ul>
-    <% @candidate_votes.each do |candidate_vote| %>
-      <li>
-        <div class="">
-          candidate
-
-          <div class="">
-            score: <%= candidate_vote.candidate_votes %>
-          </div>
-          <div class="">
-            gross: <%= candidate_vote.gross_votes %>
-          </div>
-        </div>
+    <% @candidate_votes.each do |candidate| %>
+      <li class="single-candidate">
+        <span class="candidate-name">
+          <%= candidate.code %>
+        </span>
+        <span class="candidate-stats">
+          Votes: <%= candidate.valid_votes %>
+        </span>
+        <span class="candidate-stats">
+          Invalid votes: <%= candidate.invalid_votes %>
+        </span>
       </li>
     <% end %>
   </ul>

@@ -10,29 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905075505) do
+ActiveRecord::Schema.define(version: 20170905084452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
   enable_extension "pgcrypto"
 
-  create_table "campaigns", force: :cascade do |t|
+  create_table "campaigns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "candidates", force: :cascade do |t|
+  create_table "candidates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "votes", force: :cascade do |t|
-    t.boolean "valid"
-    t.bigint "candidate_id"
-    t.bigint "campaign_id"
+  create_table "invalid_votes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "raw"
+    t.string "reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "votes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "is_valid"
+    t.uuid "candidate_id", null: false
+    t.uuid "campaign_id", null: false
     t.datetime "voted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

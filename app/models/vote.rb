@@ -4,10 +4,13 @@ class Vote < ApplicationRecord
 
   def self.import_from_string(string)
     result = VoteParser.new(string).parse
-    if result.is_a?(Vote) && result.save
-      'valid'
-    else
-      'invalid'
+
+    unless result.is_a?(Vote) && result.save
+      reason = result.is_a?(Symbol) ? result : nil
+      InvalidVote.new({
+        raw: string,
+        reason: reason,
+      }).save
     end
   end
 end
